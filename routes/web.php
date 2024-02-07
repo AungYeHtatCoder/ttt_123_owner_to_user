@@ -1,39 +1,32 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\RolesController;
-use App\Http\Controllers\Admin\UsersController;
-use App\Http\Controllers\User\WalletController;
 use App\Http\Controllers\Admin\BannerController;
-use App\Http\Controllers\User\WelcomeController;
-use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Admin\PlayTwoDController;
-use App\Http\Controllers\Admin\TwoDigitController;
-use App\Http\Controllers\Admin\PromotionController;
-use App\Http\Controllers\User\UserWalletController;
+use App\Http\Controllers\Admin\FillBalanceReplyController;
 use App\Http\Controllers\Admin\PermissionController;
-use App\Http\Controllers\Admin\TwoDWinnerController;
+use App\Http\Controllers\Admin\PlayTwoDController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\PromotionController;
+use App\Http\Controllers\Admin\RolesController;
+use App\Http\Controllers\Admin\ThreeD\DailyThreeDIncomeOutComeController;
+use App\Http\Controllers\Admin\ThreedHistoryController;
+use App\Http\Controllers\Admin\ThreedMatchTimeController;
+use App\Http\Controllers\Admin\TwoDigitController;
 use App\Http\Controllers\Admin\TwoDLotteryController;
 use App\Http\Controllers\Admin\TwoDMorningController;
-use App\Http\Controllers\Admin\ThreedHistoryController;
-use App\Http\Controllers\User\ChangePasswordController;
-use App\Http\Controllers\Admin\ThreedMatchTimeController;
-use App\Http\Controllers\Admin\FillBalanceReplyController;
+use App\Http\Controllers\Admin\TwoDWinnerController;
+use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\BankController;
+use App\Http\Controllers\Home\CashInRequestController;
+use App\Http\Controllers\Home\CashOutRequestController;
+use App\Http\Controllers\Home\TransferLogController;
 use App\Http\Controllers\User\Threed\ThreeDPlayController;
-use App\Http\Controllers\User\WithDraw\WithDrawController;
-use App\Http\Controllers\Admin\TwoDEveningWinnerController;
-use App\Http\Controllers\Admin\TwoDWinnerHistoryController;
-use App\Http\Controllers\User\FillBalance\FillBalanceController;
-use App\Http\Controllers\Admin\ThreeD\DailyThreeDIncomeOutComeController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('two_d.api_test');
-// });
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-// Route::get('/user-profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('home');
 
 Route::get('/', [App\Http\Controllers\User\WelcomeController::class, 'index'])->name('welcome');
 
@@ -62,6 +55,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
   Route::resource('banners', BannerController::class);
   //promotions
   Route::resource('/promotions', PromotionController::class);
+  Route::resource('/banks', BankController::class);
+
   // profile resource rotues
   Route::resource('profiles', ProfileController::class);
   // user profile route get method
@@ -249,6 +244,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
     Route::get('/threed-lotteries-history', [ThreedHistoryController::class, 'index']);
     Route::get('/threed-lotteries-match-time', [ThreedMatchTimeController::class, 'index']);
 
+    //wallet management
+        Route::get('/transferlogs', [TransferLogController::class, 'index'])->name('transferLog');
+    //wallet management
+
+      //accept and reject request
+      Route::get('/cashIn', [CashInRequestController::class, 'index'])->name('cashIn');
+      Route::get('/cashIn/{id}', [CashInRequestController::class, 'show'])->name('cashIn.show');
+      Route::get('/cashOut', [CashOutRequestController::class, 'index'])->name('cashOut');
+      Route::get('/cashOut/{id}', [CashOutRequestController::class, 'show'])->name('cashOut.show');
+      Route::post('/deposit/reject/{id}', [CashInRequestController::class, "reject"])->name('deposite-reject');
+      Route::post('/deposit/accept/{id}', [CashInRequestController::class, "accept"])->name('deposite-accept');
+      Route::post('/withdraw/accept/{id}', [CashOutRequestController::class, "accept"])->name('withdraw-accept');
+      Route::post('/withdraw/reject/{id}', [CashOutRequestController::class, "reject"])->name('withdraw-reject');
+
 });
 
 
@@ -260,6 +269,8 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'namespace' => 'App\Http\Cont
     Route::post('editInfo', [ProfileController::class, 'editInfo'])->name('editInfo');
     Route::post('changePassword', [ProfileController::class, 'changePassword'])->name('changePassword');
     //profile management
+
+
 
     Route::get('/dashboard', [App\Http\Controllers\User\WelcomeController::class, 'dashboard'])->name('dashboard');
 
@@ -299,35 +310,26 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'namespace' => 'App\Http\Cont
     Route::post('/twod-play-quick-confirm', [App\Http\Controllers\User\TwodQuick\TwoDQicklyPlayController::class, 'store'])->name('twod-play-quickly-confirm.store');
     // money transfer
     Route::get('/wallet-deposite', [App\Http\Controllers\User\FillBalance\FillBalanceController::class, 'index'])->name('deposite-wallet');
-  Route::get('/fill-balance', [App\Http\Controllers\User\FillBalance\FillBalanceController::class, 'topUpWallet'])->name('topUpWallet');
 
-  Route::get('/kpay-fill-balance-top-up-submit', [App\Http\Controllers\User\FillBalance\FillBalanceController::class, 'topUpSubmit'])->name('topUpSubmit');
+    //deposit
+    Route::get('/fill-balance', [App\Http\Controllers\User\FillBalance\FillBalanceController::class, 'topUpWallet'])->name('topUpWallet');
+    Route::get('/fill-balance-top-up-submit/{id}', [App\Http\Controllers\User\FillBalance\FillBalanceController::class, 'topUpSubmit'])->name('topUpSubmit');
+    Route::post('/deposit', [CashInRequestController::class, 'deposit'])->name('deposit');
+    //deposit
 
-  Route::get('/cb-pay-fill-balance-top-up-submit', [App\Http\Controllers\User\FillBalance\FillBalanceController::class, 'CBPaytopUpSubmit'])->name('CBPaytopUpSubmit');
+    //withdraw
+    Route::get('/withdraw-money', [App\Http\Controllers\User\FillBalance\FillBalanceController::class, 'withdrawBalance'])->name('withdrawBalance');
+    Route::get('/withdraw/{id}', [App\Http\Controllers\User\FillBalance\FillBalanceController::class, 'withdrawBank'])->name('withdrawBank');
+    Route::post('/withdraw', [CashOutRequestController::class, 'withdraw'])->name('withdraw');
+    //withdraw
 
-  Route::get('/wave-pay-fill-balance-top-up-submit', [App\Http\Controllers\User\FillBalance\FillBalanceController::class, 'WavePaytopUpSubmit'])->name('WavePaytopUpSubmit');
+    //transferlog
+    Route::get('/transferlogs', [TransferLogController::class, 'log'])->name('transferLog');
 
-  Route::get('/aya-pay-fill-balance-top-up-submit', [App\Http\Controllers\User\FillBalance\FillBalanceController::class, 'AYAPaytopUpSubmit'])->name('AYAPaytopUpSubmit');
 
-  Route::post('/user-kpay-fill-money', [FillBalanceController::class, 'StoreKpayFillMoney'])->name('StoreKpayFillMoney');
 
-  Route::post('/user-cb-pay-fill-money', [FillBalanceController::class, 'StoreCBpayFillMoney'])->name('StoreCBpayFillMoney');
 
-  Route::post('/user-wave-pay-fill-money', [FillBalanceController::class, 'StoreWavepayFillMoney'])->name('StoreWavepayFillMoney');
 
-  Route::post('/user-aya-pay-fill-money', [FillBalanceController::class, 'StoreAYApayFillMoney'])->name('StoreAYApayFillMoney');
-  //withdraw
-  Route::get('/withdraw-money', [App\Http\Controllers\User\WithDraw\WithDrawController::class, 'GetWithdraw'])->name('money-withdraw');
-  Route::get('k-pay-withdraw-money', [WithDrawController::class, 'UserKpayWithdrawMoney'])->name('UserKpayWithdrawMoney');
-  Route::post('k-pay-with-draw-money', [WithDrawController::class, 'StoreKpayWithdrawMoney'])->name('StoreKpayWithdrawMoney');
-
-  Route::get('cb-pay-withdraw-money', [WithDrawController::class, 'UserCBPayWithdrawMoney'])->name('UserCBPayWithdrawMoney');
-  Route::post('cb-pay-with-draw-money', [WithDrawController::class, 'StoreCBpayWithdrawMoney'])->name('StoreCBpayWithdrawMoney');
-
-  Route::get('wave-pay-withdraw-money', [WithDrawController::class, 'UserWavePayWithdrawMoney'])->name('UserWavePayWithdrawMoney');
-  Route::post('wave-pay-with-draw-money', [WithDrawController::class, 'StoreWavepayWithdrawMoney'])->name('StoreWavepayWithdrawMoney');
-  Route::get('aya-pay-withdraw-money', [WithDrawController::class, 'UserAYAPayWithdrawMoney'])->name('UserAYAPayWithdrawMoney');
-  Route::post('aya-pay-with-draw-money', [WithDrawController::class, 'StoreAYApayWithdrawMoney'])->name('StoreAYApayWithdrawMoney');
 
   // money transfer end
 
@@ -351,6 +353,7 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'namespace' => 'App\Http\Cont
   Route::get('/three-d-dream-book', [App\Http\Controllers\User\Threed\ThreeDreamBookController::class, 'index'])->name('three-d-dream-book-index');
   // three d winner history
   Route::get('/three-d-winners-history', [App\Http\Controllers\User\Threed\ThreedWinnerHistoryController::class, 'index'])->name('three-d-winners-history');
+
 
 });
 
