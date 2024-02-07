@@ -61,6 +61,48 @@
               <span class="sidenav-normal  ms-2  ps-1"> Promotions </span>
             </a>
           </li>
+          <li class="nav-item ">
+            <a class="nav-link text-white " href="{{ route('admin.banks.index') }}">
+              <span class="sidenav-mini-icon"> <i class="fas fa-coins"></i> </span>
+              <span class="sidenav-normal  ms-2  ps-1"> ဘဏ်အကောင့်များ </span>
+            </a>
+          </li>
+          @can('user_access')
+          <li class="nav-item">
+            <a class="nav-link text-white " href="{{ route('admin.cashIn')}}">
+              <i class="fas fa-coins"></i>
+              <span class="sidenav-normal  ms-2  ps-1"> 
+                ငွေသွင်းမှတ်တမ်း 
+                @php
+                  $cashInRequest = App\Models\Home\CashInRequest::where('status', 0)->count();
+                @endphp
+                <span class="badge text-bg-info text-white">{{ $cashInRequest }}</span> 
+              </span>
+            </a>
+          </li>
+          @endcan
+          @can('user_access')
+          <li class="nav-item">
+            <a class="nav-link text-white " href="{{ route('admin.cashOut') }}">
+              <i class="fas fa-coins"></i>
+              <span class="sidenav-normal  ms-2  ps-1"> 
+                ငွေထုတ်မှတ်တမ်း 
+                @php
+                  $cashOutRequest = App\Models\Home\CashOutRequest::where('status', 0)->count();
+                @endphp
+                <span class="badge text-bg-info text-white">{{ $cashOutRequest }}</span> 
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white " href="{{ route('admin.transferLog') }}">
+              <i class="fas fa-coins"></i>
+              <span class="sidenav-normal  ms-2  ps-1"> 
+                ငွေသွင်း/ငွေထုတ်မှတ်တမ်း
+              </span>
+            </a>
+          </li>
+          @endcan
           {{-- <li class="nav-item ">
             <a class="nav-link text-white " href="../../pages/dashboards/discover.html">
               <span class="sidenav-mini-icon"> D </span>

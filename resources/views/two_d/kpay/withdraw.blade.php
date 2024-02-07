@@ -8,11 +8,11 @@
     <p class="text-center mt-3" style="color: #fff">သင် ၏ အကောင့်မှ လက်ကျန်ငွေ <strong> {{ Auth::user()->balance }} </strong></p>
   <p class="text-center mt-3" style="color: #fff">ငွေထုတ်မည်</p>
   <p class="text-center" style="color: #fff">
-   ကျေးဇူးပြု၍ အောက်ပါ K Pay အကောင့်မှ ငွေထုတ်ယူပါ။
+   ကျေးဇူးပြု၍ အောက်ပါ {{ $bank->bank }} အကောင့်မှ ငွေထုတ်ယူပါ။
   </p>
   <div class="top-up-card d-flex justify-content-between">
    <div class="banks">
-    <img src="{{ asset('user_app/assets/images/bank/kpay.png') }}" class="w-100" alt="" />
+    <img src="{{ $bank->img_url }}" class="w-100" alt="" />
    </div>
    <p class="mt-4 text-white">K Pay</p>
    <hr class="vertical-line" style="border-left: 2px solid #000; height: 10vh" />
@@ -21,29 +21,31 @@
     <p>--------</p>
    </div>
   </div>
-  <form action="{{ route('user.StoreKpayWithdrawMoney') }}" method="POST">
-    @csrf
+
   <div class="form-group mt-2">
     <p class="text-white">ငွေလက်ခံမည့်ဖုန်းနံပါတ်</p>
     {{-- <input type="number" value="" class="form-control" name="" id="inputField"> --}}
-    <input type="number" id="kpay_no" name="kpay_no" class="form-control" value="{{ $user->kpay_no }}">
+    <input type="number" id="kpay_no" class="form-control" value="{{ $bank->phone }}">
         <div class="input-group-append float-end">
             <button class="btn btn-outline-secondary" type="button" onclick="copyToClipboard()">Copy</button>
         </div>
   </div>
+<form action="{{ route('user.withdraw') }}" method="POST">
+    @csrf
+    <input type="hidden" name="payment_method" value="{{ $bank->bank }}">
   <div class="form-group mt-5">
     <p class="text-white">သင်၏ Kpay ဖုန်းနံပါတ်ထည့်ပါ</p>
-    <input type="number" value="" class="form-control" name="user_ph_no">
+    <input type="number" value="" class="form-control" name="phone">
+    @error('phone')
+      <span class="text-warning d-block">*{{ $message }}</span>
+    @enderror
   </div>
-  {{-- <p class="mt-4" style="color: #fff; font-size: 14px">
-   လုပ်ဆောင်မှုအမှတ်စဥ် (နောက်ဆုံးဂဏန်း ၆ လုံး)
-  </p>
-  <div class="form-group">
-   <input type="number" class="form-control" placeholder="ဂဏန်းခြောက်လုံး ဖြည့်ပါ" name="last_six_digit" id="" />
-  </div> --}}
   <div class="form-group mt-3">
           <p style="color: #fff">ငွေထုတ်ယူမည့် ပမာဏ</p>
           <input type="number" value="" class="form-control" name="amount" id="inputField" />
+          @error('amount')
+          <span class="text-warning d-block">*{{ $message }}</span>
+        @enderror
         </div>
         <div class="d-flex justify-content-between m-3">
           <div class="fill-box" data-value="1000" onclick="fillInputBox(this)">

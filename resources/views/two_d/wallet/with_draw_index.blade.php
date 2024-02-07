@@ -9,19 +9,11 @@
 
     <p style="color: #fff">မိမိ ငွေထုတ်ယူမည့်ဘဏ်တစ်ခုရွေးပါ</p>
    <div class="top-up-card">
-      <div class="banks blur-image">
-        <img src="{{ asset('user_app/assets/images/bank/kpay.png') }}" onclick="showForm()" class="w-100" alt="" />
-      </div>
-      <div class="banks blur-image">
-        <img src="{{ asset('user_app/assets/images/bank/wpay.png') }}" onclick="showForm()" class="w-100" alt="" />
-      </div>
-      <div class="banks blur-image">
-        <img src="{{ asset('user_app/assets/images/bank/cbpay.png') }}" onclick="showForm()" class="w-100" alt="" />
-      </div>
-      <div class="banks blur-image">
-        <img src="{{ asset('user_app/assets/images/bank/aya_logo.png') }}" onclick="showForm()" class="w-100" alt="" />
-      </div>
+    @foreach ($banks as $bank)
+    <div class="banks blur-image">
+      <img src="{{ $bank->img_url }}" onclick="showForm()" class="w-100" alt="" />
     </div>
+    @endforeach
 
     <div class="text-center mt-3">
       <p style="color: #fff">လက်ကျန်ငွေ: {{ Auth::user()->balance }} ကျပ်</p>
@@ -31,19 +23,11 @@
     <div class="row">
       <div class="container" id="top-up-form" style="display: none">
        <form action="">
-        
-        <div class="form-group mt-2">
-          <a href="{{ url('/user/k-pay-withdraw-money') }}" class="btn top-up-btn">Kpay - ဆက်လုပ်ရန်</a>
-        </div>
-        <div class="form-group mt-2">
-          <a href="{{ url('/user/cb-pay-withdraw-money') }}" class="btn top-up-btn">CBpay - ဆက်လုပ်ရန်</a>
-        </div>
-        <div class="form-group mt-2">
-          <a href="{{ url('/user/wave-pay-withdraw-money') }}" class="btn top-up-btn">Wave pay - ဆက်လုပ်ရန်</a>
-        </div>
-        <div class="form-group mt-2">
-          <a href="{{ url('/user/aya-pay-withdraw-money') }}" class="btn top-up-btn">AYA pay - ဆက်လုပ်ရန်</a>
-        </div>
+      @foreach ($banks as $bank)
+      <div class="form-group mt-2">
+        <a href="{{ url('/user/withdraw/'.$bank->id) }}" class="btn top-up-btn">{{ $bank->bank }} - ဆက်လုပ်ရန်</a>
+      </div>
+      @endforeach
         </form>
       </div>
     </div>

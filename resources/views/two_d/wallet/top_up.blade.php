@@ -1,23 +1,4 @@
 @extends('frontend.layouts.app')
-@section('content')
-<div class="row">
-  <div class="col-lg-4 col-md-4 offset-lg-4 offset-md-4 navs fixed-top">
-    <div class="px-3 py-3">
-      <div class="d-flex justify-content-between">
-        <span>
-          <a class="material-icons text-white" href="{{ url('/user/wallet-deposite') }}">arrow_back</a>
-        </span>
-        <h5 class="mx-auto">
-          <a href="{{ url('/') }}" class="text-white">Thai Lotto 123</a>
-        </h5>
-        <span>
-          <a class="material-icons text-white" href="{{ url('/')}}">refresh</a>
-        </span>
-      </div>
-    </div>
-  </div>
-</div>
-
 
 @section('content')
 <div class="row">
@@ -29,12 +10,17 @@
 
     <p style="color: #fff">မိမိ ငွေဖြည့်မည့်ဘဏ်တစ်ခုရွေးပါ</p>
     <div class="top-up-card">
-      <div class="banks blur-image">
+      {{-- <div class="banks blur-image">
        <div class="d-flex bank ck">
         <img src="{{ asset('user_app/assets/images/bank/kpay.png') }}" onclick="showForm()" class="w-100" alt="" />
        </div>
-      </div>
+      </div> --}}
+      @foreach ($banks as $bank)
       <div class="banks blur-image">
+        <img src="{{ $bank->img_url }}" onclick="showForm()" class="w-100" alt="" />
+      </div>
+      @endforeach
+      {{-- <div class="banks blur-image">
         <img src="{{ asset('user_app/assets/images/bank/wpay.png') }}" onclick="showForm()" class="w-100" alt="" />
       </div>
       <div class="banks blur-image">
@@ -42,7 +28,7 @@
       </div>
       <div class="banks blur-image">
         <img src="{{ asset('user_app/assets/images/bank/aya_logo.png') }}" onclick="showForm()" class="w-100" alt="" />
-      </div>
+      </div> --}}
     </div>
 
     <div class="text-center mt-3">
@@ -53,18 +39,11 @@
     <div class="row">
       <div class="container" id="top-up-form" style="display: none">
        <form action="">
+        @foreach ($banks as $bank)
         <div class="form-group mt-2">
-          <a href="{{ url('/user/kpay-fill-balance-top-up-submit') }}" class="btn top-up-btn text-white">Kpay - ဆက်လုပ်ရန်</a>
+          <a href="{{ url('/user/fill-balance-top-up-submit/'.$bank->id) }}" class="btn top-up-btn text-white">{{ $bank->bank }} - ဆက်လုပ်ရန်</a>
         </div>
-        <div class="form-group mt-2">
-          <a href="{{ url('/user/cb-pay-fill-balance-top-up-submit') }}" class="btn top-up-btn text-white">CBpay - ဆက်လုပ်ရန်</a>
-        </div>
-        <div class="form-group mt-2">
-          <a href="{{ url('/user/wave-pay-fill-balance-top-up-submit') }}" class="btn top-up-btn text-white">Wave pay - ဆက်လုပ်ရန်</a>
-        </div>
-        <div class="form-group mt-2">
-          <a href="{{ url('/user/aya-pay-fill-balance-top-up-submit') }}" class="btn top-up-btn text-white">AYA pay - ဆက်လုပ်ရန်</a>
-        </div>
+        @endforeach
         </form>
       </div>
     </div>
