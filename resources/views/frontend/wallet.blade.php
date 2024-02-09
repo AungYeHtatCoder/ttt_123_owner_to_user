@@ -13,8 +13,8 @@
             <i class="fa-regular fa-circle-user fs-1 profile-icon"></i>
           </div>
           <div class="ms-3 text-white">
-            <p class="mb-0 pb-1">User Name</p>
-            <p>လက်ကျန်ငွေ: 0 ကျပ်</p>
+            <p class="mb-0 pb-1">{{ Auth::user()->name }}</p>
+            <p>လက်ကျန်ငွေ: {{ Auth::user()->balance }} ကျပ်</p>
           </div>
         </div>
       </div>
