@@ -29,7 +29,7 @@
     <!-- font awesome  -->
     <script src="https://kit.fontawesome.com/b829c5162c.js" crossorigin="anonymous"></script>
   </head>
-  <body style="max-height: 100vh;">
+  <body>
     <div class="container-fluid">
        <!-- nav section -->
         <div class="row">

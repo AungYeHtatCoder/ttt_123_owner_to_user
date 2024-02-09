@@ -55,22 +55,36 @@
         </div>
       </div>
     </div>
-    <div class="row mt-4">
-      <div class="wallet-card">
-        <h5 class="text-white text-center">ငွေဖြည့်လိုပါက</h5>
-        <div class="p-3 text-left text-white">
-          <p>၁။ "ငွေဖြည့်" ကို နှိပ်ပါ။</p>
-          <p>
-            ၂။ KBZ Pay, Wave Pay, CB Pay နှင့် AYA Pay တို့မှ
-            မိမိငွေဖြည့်မည့် ဘဏ်ကို ရွေးပါ။
-          </p>
-          <p>
-            ၃။ သက်ဆိုင်ရာ Pay ဖြင့် ငွေသွင်းနိုင်သော အကောင့်များ
-            ပေါ်လာပါလိမ့်မည်။
-          </p>
-        </div>
+    <div class="row mt-4 mb-3 mx-auto text-center">
+      <div class="col-3">
+        <small class="text-white">နေ့စွဲ</small>
+      </div>
+      <div class="col-3">
+        <small class="text-white">အမျိုးအစား</small>
+      </div>
+      <div class="col-3">
+        <small class="text-white">ပမာဏ</small>
+      </div>
+      <div class="col-3">
+        <small class="text-white">အခြေအနေ</small>
       </div>
     </div> 
+    @foreach ($logs as $log)
+      <div class="row text-center mx-auto mb-2">
+        <div class="col-3">
+          <small class="text-white">{{ $log->created_at->format('j/m/Y') }}</small>
+        </div>
+        <div class="col-3">
+          <small class="text-white">{{ $log->type == "Withdraw" ? "ထုတ်ငွေ" : "သွင်းငွေ" }}</small>
+        </div>
+        <div class="col-3">
+          <small class="text-white">{{ number_format($log->amount) }} ကျပ်</small>
+        </div>
+        <div class="col-3">
+          <small class="badge text-bg-{{ $log->status == 0 ? 'warning' :($log->status == 1 ? 'success' : 'danger') }}">{{ $log->status == 2 ? "ပယ်ချ" : ($log->status == 1 ? "အောင်မြင်" : "စောင့်ဆိုင်း") }}</small>
+        </div>
+      </div>
+    @endforeach
 
   
       
