@@ -1,27 +1,36 @@
 <?php
 
-use App\Http\Controllers\Admin\BannerController;
-use App\Http\Controllers\Admin\FillBalanceReplyController;
-use App\Http\Controllers\Admin\PermissionController;
-use App\Http\Controllers\Admin\PlayTwoDController;
-use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Admin\PromotionController;
-use App\Http\Controllers\Admin\RolesController;
-use App\Http\Controllers\Admin\ThreeD\DailyThreeDIncomeOutComeController;
-use App\Http\Controllers\Admin\ThreedHistoryController;
-use App\Http\Controllers\Admin\ThreedMatchTimeController;
-use App\Http\Controllers\Admin\TwoDigitController;
-use App\Http\Controllers\Admin\TwoDLotteryController;
-use App\Http\Controllers\Admin\TwoDMorningController;
-use App\Http\Controllers\Admin\TwoDWinnerController;
-use App\Http\Controllers\Admin\UsersController;
-use App\Http\Controllers\Admin\BankController;
-use App\Http\Controllers\Home\CashInRequestController;
-use App\Http\Controllers\Home\CashOutRequestController;
-use App\Http\Controllers\Home\TransferLogController;
-use App\Http\Controllers\User\Threed\ThreeDPlayController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\BankController;
+use App\Http\Controllers\Admin\RolesController;
+use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\PlayTwoDController;
+use App\Http\Controllers\Admin\TwoDigitController;
+use App\Http\Controllers\Admin\PromotionController;
+use App\Http\Controllers\Admin\TwoDLimitController;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\TwoDWinnerController;
+use App\Http\Controllers\Home\TransferLogController;
+use App\Http\Controllers\Admin\ThreeDLimitController;
+use App\Http\Controllers\Admin\TwoDLotteryController;
+use App\Http\Controllers\Admin\TwoDMorningController;
+use App\Http\Controllers\Home\CashInRequestController;
+use App\Http\Controllers\Admin\ThreedHistoryController;
+use App\Http\Controllers\Home\CashOutRequestController;
+use App\Http\Controllers\Admin\TwoD\DataLejarController;
+use App\Http\Controllers\Admin\TwoD\TwoDLagarController;
+use App\Http\Controllers\Admin\ThreedMatchTimeController;
+use App\Http\Controllers\Admin\FillBalanceReplyController;
+use App\Http\Controllers\User\Threed\ThreeDPlayController;
+use App\Http\Controllers\Admin\ThreeD\ThreeDCloseController;
+use App\Http\Controllers\Admin\ThreeD\ThreeDLegarController;
+use App\Http\Controllers\Admin\TwoD\CloseTwoDigitController;
+use App\Http\Controllers\Admin\TwoD\TwodRoleLimitController;
+use App\Http\Controllers\Admin\TwoD\HeadDigitCloseController;
+use App\Http\Controllers\Admin\ThreeD\DailyThreeDIncomeOutComeController;
 
 
 Auth::routes();
@@ -65,6 +74,48 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
   Route::put('/change-phone-address', [ProfileController::class, 'PhoneAddressChange'])->name('changePhoneAddress');
   Route::put('/change-kpay-no', [ProfileController::class, 'KpayNoChange'])->name('changeKpayNo');
   Route::put('/change-join-date', [ProfileController::class, 'JoinDate'])->name('addJoinDate');
+  // two d commission route
+    Route::get('/two-d-commission', [App\Http\Controllers\Admin\Commission\TwoDCommissionController::class, 'getTwoDTotalAmountPerUser'])->name('two-d-commission'); 
+
+    // show details
+    Route::get('/two-d-commission-show/{id}', [App\Http\Controllers\Admin\Commission\TwoDCommissionController::class, 'show'])->name('two-d-commission-show');
+    Route::put('/two-d-commission-update/{id}', [App\Http\Controllers\Admin\Commission\TwoDCommissionController::class, 'update'])->name('two-d-commission-update');
+    // commission update
+   Route::post('two-d-transfer-commission/{id}', [App\Http\Controllers\Admin\Commission\TwoDCommissionController::class, 'TwoDtransferCommission'])->name('two-d-transfer-commission');
+    
+    // three d commission route
+    Route::get('/three-d-commission', [App\Http\Controllers\Admin\Commission\ThreeDCommissionController::class, 'getThreeDTotalAmountPerUser'])->name('three-d-commission');
+    // show details 
+    Route::get('/three-d-commission-show/{id}', [App\Http\Controllers\Admin\Commission\ThreeDCommissionController::class, 'show'])->name('three-d-commission-show');
+    // three_d_commission_update
+    Route::put('/three-d-commission-update/{id}', [App\Http\Controllers\Admin\Commission\ThreeDCommissionController::class, 'update'])->name('three-d-commission-update');
+    // transfer commission route
+    Route::post('/three-d-transfer-commission/{id}', [App\Http\Controllers\Admin\Commission\ThreeDCommissionController::class, 'ThreeDtransferCommission'])->name('three-d-transfer-commission');
+    // show transfer commission
+
+  Route::resource('role-limits', TwodRoleLimitController::class);
+    Route::resource('/two-digit-limit', TwoDLimitController::class);
+
+    Route::resource('/three-digit-limit', ThreeDLimitController::class);
+
+  // two digit close 
+    Route::resource('two-digit-close', CloseTwoDigitController::class);
+    Route::resource('head-digit-close', HeadDigitCloseController::class);
+
+    // morning - lajar 
+    Route::get('/morning-lajar', [TwoDLagarController::class, 'showData'])->name('morning-lajar');
+    // two digit data
+    Route::get('/two-digit-lejar-data', [DataLejarController::class, 'showData'])->name('two-digit-lejar-data');
+
+    // morning - lajar 
+    Route::get('/evening-lajar', [TwoDLagarController::class, 'showDataEvening'])->name('evening-lajar');
+    // two digit data
+    Route::get('/evening-two-digit-lejar-data', [DataLejarController::class, 'showDataEvening'])->name('evening-two-digit-lejar-data');
+    // three digit close
+    Route::resource('three-digit-close', ThreeDCloseController::class);
+    // three digit legar
+    Route::get('/three-digit-lejar', [ThreeDLegarController::class, 'showData'])->name('three-digit-lejar');
+    
   Route::resource('play-twod', PlayTwoDController::class);
   Route::get('/get-two-d', [App\Http\Controllers\Admin\TwoDPlayController::class, 'GetTwoDigit'])->name('GetTwoDigit');
   Route::post('lotteries-two-d-play', [TwoDigitController::class, 'store'])->name('StorePlayTwoD');

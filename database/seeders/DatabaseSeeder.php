@@ -29,6 +29,10 @@ class DatabaseSeeder extends Seeder
             //TwoDLotteryPlaySeeder::class,
             ThreeDigitsTableSeeder::class,
             ThreedMatchTimesTableSeeder::class,
+            RoleLimitSeeder::class,
+            TwoDBreakSeeder::class,
+            TwoDLimitTableSeeder::class,
+            ThreeDLimitTableSeeder::class,
             
         ]);
     }

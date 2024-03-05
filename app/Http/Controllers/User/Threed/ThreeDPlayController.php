@@ -4,18 +4,28 @@ namespace App\Http\Controllers\User\Threed;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Services\LottoService;
 use App\Models\ThreeDigit\Lotto;
 use App\Models\Admin\LotteryMatch;
+use App\Models\Admin\ThreeDDLimit;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ThreeDigit\ThreeDigit;
+use App\Models\ThreeDigit\ThreedClose;
+use App\Http\Requests\ThreedPlayRequest;
 use App\Models\ThreeDigit\ThreeDigitOverLimit;
 use App\Models\ThreeDigit\LotteryThreeDigitPivot;
 
 class ThreeDPlayController extends Controller
 {
+    protected $lottoService;
+
+    public function __construct(LottoService $lottoService)
+    {
+        $this->lottoService = $lottoService;
+    }
     public function index()
     {
         return view('three_d.index');
@@ -68,21 +78,75 @@ class ThreeDPlayController extends Controller
         ]);
     }
 
+    // public function store(Request $request)
+    // {
+    //     try {
+    //         // Validate the request data
+    //         $request->validate([
+    //             'totalAmount' => 'required|numeric',
+    //             'user_id' => 'required|integer',
+    //             'amounts' => 'required|array',
+    //         ]);
+
+    //         // Play the lottery
+    //         $lottery = $this->lottoService->play($request->totalAmount, $request->user_id);
+
+    //         // If the play method returns a string, it means there was an error
+    //         if (is_string($lottery)) {
+    //             throw new \Exception($lottery);
+    //         }
+
+    //         // Process each amount
+    //         foreach ($request->amounts as $three_digit_string => $sub_amount) {
+    //             $three_digit_id = $three_digit_string === '00' ? 1 : intval($three_digit_string, 10) + 1;
+
+    //             $this->lottoService->processAmount(['num' => $three_digit_id, 'amount' => $sub_amount], $lottery->id);
+    //         }
+
+    //         // If everything went well, return a success response
+    //         return response()->json(['message' => 'Lottery played successfully'], 200);
+    //     } catch (\Exception $e) {
+    //         // If there was an error, return an error response
+    //         return response()->json(['message' => $e->getMessage()], 400);
+    //     }
+    // }
 
     public function store(Request $request)
 {
     
-    //Log::info($request->all());
+    Log::info($request->all());
     $validatedData = $request->validate([
         'selected_digits' => 'required|string',
         'amounts' => 'required|array',
+        //'amounts.*.num' => 'required|integer',
         'amounts.*' => 'required|integer|min:100|max:50000',
-         'totalAmount' => 'required|numeric|min:100', 
+        'totalAmount' => 'required|numeric|min:100', 
         'user_id' => 'required|exists:users,id',
     ]);
 
     //$currentSession = date('H') < 12 ? 'morning' : 'evening';
-    $limitAmount = 50000; // Define the limit amount
+    //$limitAmount = 50000; // Define the limit amount
+    $limitAmount = ThreeDDLimit::latest()->first()->three_d_limit;
+    Log::info($limitAmount);
+
+     $closedTwoDigits = ThreedClose::query()
+            ->pluck('digit')
+            ->map(function ($digit) {
+                // Ensure formatting as a two-digit string
+                return sprintf('%03d', $digit);
+            })
+            ->unique()
+            ->filter()
+            ->values()
+            ->all();
+
+        foreach ($request->input('amounts') as $three_digit_string => $sub_amount) {
+    $twoDigitOfSelected = sprintf('%03d', $three_digit_string); // Format the key as a three-digit string
+
+    if (in_array($twoDigitOfSelected, $closedTwoDigits)) {
+        return redirect()->back()->with('error', "3D - '{$twoDigitOfSelected}' ဂဏန်းကိုပိတ်ထားပါသည်။ သင့်ကံစမ်းမှုမအောင်မြင်ပါ - ကျေးဇူးပြု၍ ဂဏန်းပြန်ရွှေးချယ်ပါ။");
+    }
+        }
 
     DB::beginTransaction();
 
@@ -114,6 +178,7 @@ class ThreeDPlayController extends Controller
                 $pivot = new LotteryThreeDigitPivot([
                     'lotto_id' => $lottery->id,
                     'three_digit_id' => $three_digit_id,
+                    'bet_digit' => $three_digit_string,
                     'sub_amount' => $sub_amount,
                     'prize_sent' => false
                 ]);
@@ -126,6 +191,7 @@ class ThreeDPlayController extends Controller
                     $pivotWithin = new LotteryThreeDigitPivot([
                         'lotto_id' => $lottery->id,
                         'three_digit_id' => $three_digit_id,
+                        'bet_digit' => $three_digit_string,
                         'sub_amount' => $withinLimit,
                         'prize_sent' => false
                     ]);
@@ -136,6 +202,7 @@ class ThreeDPlayController extends Controller
                     $pivotOver = new ThreeDigitOverLimit([
                         'lottery_id' => $lottery->id,
                         'two_digit_id' => $three_digit_id,
+                        'bet_digit' => $three_digit_string,
                         'sub_amount' => $overLimit,
                         'prize_sent' => false
                     ]);

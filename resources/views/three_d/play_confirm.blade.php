@@ -35,6 +35,17 @@
       </div> --}}
       <hr />
       <div class="text-center text-white py-2" style="background: #c50408; border-radius: 5px">
+        @if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+        @endif
+
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
        <p class="pt-2">လက်ကျန်ငွေ</p>
        <p id="userBalance" data-balance="{{ Auth::user()->balance }}">{{ Auth::user()->balance }} MMK
        </p>
