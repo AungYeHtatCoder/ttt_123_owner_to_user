@@ -1,4 +1,14 @@
 @extends('frontend.layouts.app')
+
+@section('style')
+<style>
+  .fa-brands{
+    color: #fff !important;
+    background: transparent !important; 
+  }
+</style>
+@endsection
+
 @section('content')
 <div class="row">
     <div
@@ -8,7 +18,7 @@
       
     <div class="row service  mt-3 text-center">
       <div class="col-6" id="first-block"><p>ကိုယ်စားလှယ်သို့</p></div>
-      <div class="col-6 click1" id="second-block"><p>Delight ကုမ္ပဏီသို့</p></div>
+      <div class="col-6 click1" id="second-block"><p>TTT Gamingသို့</p></div>
     </div>
 
     <!-- first block -->
@@ -21,26 +31,36 @@
     <!-- second block -->
     <div class="second-block">
        <div class="container mt-3 text-center">
-          <p class="text-white">အောက်ပါဖုန်းနံပါတ်သည် Delight Myanmar ကုမ္ပဏီ၏ ဝန်ဆောင်မှုဖုန်းနံပါတ်ဖြစ်သည်</p>
+          <p class="text-white">အောက်ပါဖုန်းနံပါတ်သည် TTT Gaming ၏ ဝန်ဆောင်မှုဖုန်းနံပါတ်ဖြစ်သည်</p>
           <p class="text-white">နေ့စဉ်(၂၄) နာရီ ၊ ပိတ်ရက်မရှိ ဝန်ဆောင်ပေးနေပါသည်။</p>
        </div>
-      <div class="second-card">
+      <div class="second-card mt-5">
         <p>ဝန်ဆောင်မှု ဖုန်းနံပါတ်</p>
         <div class="d-flex justify-content-between mt-4">
-          <p>+0912345678</p>
-          <a href="" class="d-flex px-3 text-decoration-none">
-            <i class="fa-brands fs-4 mt-2 pe-2 fa-viber" style="color: purple !important"></i><p class="mt-2">Viber</p>
-          </a>
+          <p>+95 9 777 773 134</p>
+          <div>
+            <a href="viber://chat?number=09777773134" class="bg-transparent">
+              <i class="fa-brands fa-viber" style="color: #fff !important; font-size: 30px;"></i>
+            </a>
+            <a href="https://t.me/TTTgaming" class="bg-transparent" target="_blank">
+              <i class="fa-brands fa-telegram" style="color: #fff !important; font-size: 30px;"></i>
+            </a>
+          </div>
         </div>
 
         <div class="d-flex justify-content-between mt-4 mb-4">
-          <p>+0912345678</p>
-          <a href="" class="d-flex px-3 text-decoration-none">
-            <i class="fa-brands fs-4 mt-2 pe-2 fa-viber" style="color: purple !important"></i><p class="mt-2">Viber</p>
-          </a>
+          <p>+95 9 676 767 507</p>
+          <div>
+            <a href="viber://chat?number=09676767507" class="bg-transparent">
+              <i class="fa-brands fa-viber" style="color: #fff !important; font-size: 30px;"></i>
+            </a>
+            <a href="https://t.me/TTTgaming" class="bg-transparent" target="_blank">
+              <i class="fa-brands fa-telegram" style="color: #fff !important; font-size: 30px;"></i>
+            </a>
+          </div>
         </div>
       </div>
-      <div class="second-card mt-3">
+      {{-- <div class="second-card mt-3">
         <p>ကိုယ်စားလှယ်ဝင်ဖို့ စုံစမ်းရန်</p>
         <div class="d-flex justify-content-between mt-4">
           <p>+0912345678</p>
@@ -48,7 +68,7 @@
             <i class="fa-brands fs-4 mt-2 pe-2 fa-viber" style="color: purple !important"></i><p class="mt-2">Viber</p>
           </a>
         </div>
-      </div>
+      </div> --}}
     </div> 
 
     </div>

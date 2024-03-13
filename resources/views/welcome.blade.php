@@ -47,7 +47,7 @@
         @endif
         @endauth
         </p>
-        <i class="material-icons">add_circle</i>
+        {{-- <i class="material-icons">add_circle</i> --}}
       </div>
     </div>
      <div class="custom-line"></div>
