@@ -22,7 +22,7 @@
       </div>
       <div class="d-flex pt-2">
         <p class="fw-bold fs-6 pe-2 text-white">0 ကျပ်</p>
-        <i class="material-icons">add_circle</i>
+        {{-- <i class="material-icons">add_circle</i> --}}
       </div>                  
     </div>
      <div class="custom-line"></div>
