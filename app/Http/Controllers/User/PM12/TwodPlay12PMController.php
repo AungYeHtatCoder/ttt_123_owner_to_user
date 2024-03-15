@@ -180,7 +180,7 @@ class TwodPlay12PMController extends Controller
     LotteryTwoDigitPivot::create([
         'lottery_id' => $lottery->id,
         'two_digit_id' => $twoDigit->id,
-        'bet_digit' => $betDigit, // Assuming bet_digit is a string representation of the bet
+        'bet_digit' => $betDigit,
         'sub_amount' => $subAmount,
         'prize_sent' => false,
     ]);
