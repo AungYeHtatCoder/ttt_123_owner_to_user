@@ -18,6 +18,8 @@ use GuzzleHttp\Exception\RequestException;
 
 class WelcomeController extends Controller
 {
+    private const USER_ROLE = 5;
+    
     /**
      * Display a listing of the resource.
      */
@@ -117,6 +119,8 @@ class WelcomeController extends Controller
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
         ]);
+        $user->roles()->sync(self::USER_ROLE);
+
 
         if ($user) {
             Auth::login($user);
