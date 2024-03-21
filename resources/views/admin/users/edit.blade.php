@@ -80,7 +80,7 @@
      </div>
     </div>
     <div class="card-body">
-     <form role="form" class="text-start" {{ route('admin.users.update', $user_edit->id) }}" method="POST">
+     <form role="form" class="text-start" action="{{ route('admin.users.update', $user_edit->id) }}" method="POST">
       @csrf
       @method('PUT')
       <div class="custom-form-group">
