@@ -181,8 +181,8 @@
               </div>
             </div>
             {{-- session reset 1 end --}}
-            {{-- session reset 2 start --}}
-            <div class="col-lg-3 col-md-6 col-sm-6">
+      {{-- session reset 2 start --}}
+            {{-- <div class="col-lg-3 col-md-6 col-sm-6">
               <div class="card  mb-2">
                 <div class="d-flex mt-n2">
                             <div class="avatar avatar-xl bg-gradient-dark border-radius-xl p-2 mt-n4">
@@ -196,7 +196,7 @@
                                         <img alt="Image placeholder" src="{{ asset('admin_app/assets/img/team-3.jpg') }}"
                                             class="">
                                     </a>
-        <form action="{{ route('admin.OverAmountLimitSessionReset') }}" method="POST">
+                                    <form action="{{ route('admin.OverAmountLimitSessionReset') }}" method="POST">
                                       @csrf
                                       <button class="btn btn-primary" type="submit">OverAmountLimitReset</button>
                                   </form>
@@ -210,8 +210,8 @@
                   <p class="mb-0"><span class="text-success text-sm font-weight-bolder">ပွဲချိန်ပြီး တခုပြီးတိုင်း  </span>၁၅ မိနစ်အတွင်း လုပ်ပေးရပါမည်။</p>
                 </div>
               </div>
-            </div>
-            {{-- session reset 2 --}}
+            </div> --}}
+    {{-- session reset 2 --}}
             <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
               <div class="card  mb-2">
                 <div class="d-flex mt-n2">

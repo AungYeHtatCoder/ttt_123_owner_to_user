@@ -465,20 +465,20 @@
           </li>
           @endcan
           @can('user_access')
-          <li class="nav-item ">
+          {{-- <li class="nav-item ">
             <a class="nav-link text-white " href="{{ route('admin.fill-balance-replies.index') }}">
               <span class="sidenav-mini-icon"> V </span>
               <span class="sidenav-normal  ms-2  ps-1"> ငွေးသွင်းစာရင်း </span>
             </a>
-          </li>
+          </li> --}}
           @endcan
           @can('user_access')
-          <li class="nav-item ">
+          {{-- <li class="nav-item ">
             <a class="nav-link text-white " href="{{ route('admin.withdrawViewGet') }}">
               <span class="sidenav-mini-icon"> BW </span>
               <span class="sidenav-normal  ms-2  ps-1"> ငွေထုတ်စာရင်း </span>
             </a>
-          </li>
+          </li> --}}
           @endcan
           @can('user_access')
            <li class="nav-item ">
@@ -497,12 +497,12 @@
           </li>
           @endcan
           @can('user_access')
-          <li class="nav-item ">
+          {{-- <li class="nav-item ">
             <a class="nav-link text-white " href="{{ route('admin.two-d-play-noti') }}">
               <span class="sidenav-mini-icon"> N </span>
               <span class="sidenav-normal  ms-2  ps-1"> Notifications</span>
             </a>
-          </li>
+          </li> --}}
           @endcan
         </ul>
       </div>
@@ -511,7 +511,7 @@
 
     {{-- 2d over amount limit --}}
 
-<li class="nav-item">
+{{-- <li class="nav-item">
    <a data-bs-toggle="collapse" href="#ecommerceExamplesOver" class="nav-link text-white " aria-controls="ecommerceExamplesOver"
     role="button" aria-expanded="false">
     <i class="material-icons-round {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">shopping_basket</i>
@@ -526,24 +526,12 @@
       </a>
       <div class="collapse " id="productsExample">
        <ul class="nav nav-sm flex-column">
-        {{-- <li class="nav-item">
-         <a class="nav-link text-white " href="{{ url('admin/get-two-d-early-morning-number-over-amount-limit')}}">
-          <span class="sidenav-mini-icon"> 2D </span>
-          <span class="sidenav-normal  ms-2  ps-1"> 9:30 OverLimit </span>
-         </a>
-        </li> --}}
         <li class="nav-item">
          <a class="nav-link text-white " href="{{ url('admin/get-two-d-morning-number-over-amount-limit') }}">
           <span class="sidenav-mini-icon"> 2D </span>
           <span class="sidenav-normal  ms-2  ps-1"> 12:1 OverLimit </span>
          </a>
         </li>
-        {{-- <li class="nav-item">
-         <a class="nav-link text-white " href="{{ url('admin/get-two-d-early-evening-number-over-amount-limit')}}">
-          <span class="sidenav-mini-icon"> 2D </span>
-          <span class="sidenav-normal  ms-2  ps-1"> 2 : OverLimit </span>
-         </a>
-        </li> --}}
         <li class="nav-item">
          <a class="nav-link text-white " href="{{ url('admin/get-two-d-evening-number-over-amount-limit') }}">
           <span class="sidenav-mini-icon"> 2D </span>
@@ -553,37 +541,9 @@
        </ul>
       </div>
      </li>
-     {{-- <li class="nav-item ">
-      <a class="nav-link text-white " data-bs-toggle="collapse" aria-expanded="false" href="#ordersExample">
-       <span class="sidenav-mini-icon"> O </span>
-       <span class="sidenav-normal  ms-2  ps-1"> Orders <b class="caret"></b></span>
-      </a>
-      <div class="collapse " id="ordersExample">
-       <ul class="nav nav-sm flex-column">
-        <li class="nav-item">
-         <a class="nav-link text-white " href="../../pages/ecommerce/orders/list.html">
-          <span class="sidenav-mini-icon"> O </span>
-          <span class="sidenav-normal  ms-2  ps-1"> Order List </span>
-         </a>
-        </li>
-        <li class="nav-item">
-         <a class="nav-link text-white " href="../../pages/ecommerce/orders/details.html">
-          <span class="sidenav-mini-icon"> O </span>
-          <span class="sidenav-normal  ms-2  ps-1"> Order Details </span>
-         </a>
-        </li>
-       </ul>
-      </div>
-     </li>
-     <li class="nav-item ">
-      <a class="nav-link text-white " href="../../pages/ecommerce/referral.html">
-       <span class="sidenav-mini-icon"> R </span>
-       <span class="sidenav-normal  ms-2  ps-1"> Referral </span>
-      </a>
-     </li> --}}
     </ul>
    </div>
-  </li>
+</li> --}}
     {{-- 2d over amount limit --}}
 
   <li class="nav-item">

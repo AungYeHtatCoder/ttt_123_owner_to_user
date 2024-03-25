@@ -180,11 +180,11 @@
             use Carbon\Carbon;
             $currentTime = Carbon::now();
             $start9Time = Carbon::parse('6:30');
-            $end12Time = Carbon::parse('12:00');
+            $end12Time = Carbon::parse('11:45'); //close time 11:45AM
             $start12Time = Carbon::parse('12:00');
             $end2Time = Carbon::parse('14:00');
             $start2Time = Carbon::parse('14:00');
-            $end4Time = Carbon::parse('16:30');
+            $end4Time = Carbon::parse('15:45'); //close time 3:45PM
         @endphp
 
         <div class="modal-btn mt-2">
