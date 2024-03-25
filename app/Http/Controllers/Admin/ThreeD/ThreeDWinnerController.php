@@ -73,8 +73,8 @@ class ThreeDWinnerController extends Controller
         ->join('three_digits', 'lotto_three_digit_pivot.three_digit_id', '=', 'three_digits.id')
         ->join('lottos', 'lotto_three_digit_pivot.lotto_id', '=', 'lottos.id')
         ->join('users', 'lottos.user_id', '=', 'users.id')
-        ->join('three_winners', 'three_digits.three_digit', '=', 'three_winners.prize_no')
-        ->whereDate('three_winners.created_at', '>=', $oneMonthAgo)
+        ->join('permutations', 'three_digits.three_digit', '=', 'permutations.digit')
+        ->whereDate('permutations.created_at', '>=', $oneMonthAgo)
         ->groupBy(
             'lottos.user_id', 
             'users.name',
@@ -83,8 +83,8 @@ class ThreeDWinnerController extends Controller
             'lotto_three_digit_pivot.sub_amount', 
             'lotto_three_digit_pivot.prize_sent',
             'lottos.total_amount', 
-            'three_winners.prize_no', 
-            'three_winners.created_at',  
+            'permutations.digit', 
+            'permutations.created_at',  
         )
         ->select(
             'lottos.user_id', 
@@ -94,8 +94,8 @@ class ThreeDWinnerController extends Controller
             'lotto_three_digit_pivot.sub_amount',
             'lotto_three_digit_pivot.prize_sent',
             'lottos.total_amount',
-            'three_winners.prize_no', 
-            'three_winners.created_at', 
+            'permutations.digit', 
+            'permutations.created_at', 
          DB::raw('lotto_three_digit_pivot.sub_amount * 10 as prize_amount')
         )
         ->orderBy('prize_amount', 'desc') // Add this line to sort by prize_amount in descending order
