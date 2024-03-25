@@ -43,7 +43,7 @@
                             <th>PlayerName</th>
                             <th>Winning Three Digits</th>
                             <th>Bet Amount</th>
-                            <th>12PM - 2:30 PM</th>
+                            <th>3:30 PM</th>
                             <th>Prize Amount</th>
                             <th>SendToAccBalance</th>
                         </thead>
@@ -59,7 +59,7 @@
                 <td>{{ $threeDigit->three_digit }}</td>
                 <td>{{ $threeDigit->pivot->sub_amount }}</td>
                 <td><span class="badge badge-success">WINNER</span></td>
-                <td>{{ $threeDigit->pivot->sub_amount * 550 }}</td>
+                <td>{{ $threeDigit->pivot->sub_amount * 700 }}</td>
                 <td>
                  @if ($threeDigit->pivot->prize_sent == 1)
                 <button type="button" class="btn btn-success" disabled>Sent - လျော်ပြီး</button>
