@@ -136,6 +136,22 @@ class ProfileController extends Controller
         return redirect()->back()->with('toast_success', "Customer Password has been Updated.");
 
     }
+    public function AdminUpdateBalance(Request $request)
+{
+    //dd($request->all());
+    $request->validate([
+        'balance' => 'required|numeric',
+    ]);
+
+    $user = User::find(Auth::user()->id);
+    // updateAdminBalance
+    $this->authorize('updateAdminBalance', $user);
+    $user->update([
+        'balance' => $user->balance + $request->balance,
+    ]);
+
+    return redirect()->back()->with('toast_success', "Admin Balance has been Updated.");
+}
     public function editInfo(Request $request)
     {
         $request->validate([

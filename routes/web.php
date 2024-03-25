@@ -68,6 +68,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
 
   // profile resource rotues
   Route::resource('profiles', ProfileController::class);
+  // admin update balance route
+  Route::put('/super-admin-update-balance/{id}', [App\Http\Controllers\Admin\ProfileController::class, 'AdminUpdateBalance'])->name('admin-update-balance');
   // user profile route get method
   Route::put('/change-password', [ProfileController::class, 'newPassword'])->name('changePassword');
   // PhoneAddressChange route with auth id route with put method

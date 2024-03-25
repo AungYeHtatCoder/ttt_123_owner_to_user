@@ -183,7 +183,8 @@ class TwodPlay12PMController extends Controller
         'bet_digit' => $betDigit,
         'sub_amount' => $subAmount,
         'prize_sent' => false,
-    ]);
+        ]);
+    }
 }
 
     //     public function store(Request $request)
@@ -271,5 +272,3 @@ class TwodPlay12PMController extends Controller
     //         return redirect()->back()->with('error', $e->getMessage());
     //     }
     // }
-
-}
