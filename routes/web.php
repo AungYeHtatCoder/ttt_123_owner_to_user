@@ -330,9 +330,8 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'namespace' => 'App\Http\Cont
     Route::post('editInfo', [ProfileController::class, 'editInfo'])->name('editInfo');
     Route::post('changePassword', [ProfileController::class, 'changePassword'])->name('changePassword');
     //profile management
-
-
-
+    // winner history route
+    Route::get('/threed-winners-histories', [App\Http\Controllers\User\WinnerAuthUserDisplayController::class, 'getWinnersHistoryForAuthUserOnly'])->name('threed_winners_histories');
     Route::get('/dashboard', [App\Http\Controllers\User\WelcomeController::class, 'dashboard'])->name('dashboard');
 
     Route::get('/two-d-play-index', [App\Http\Controllers\User\TwodPlayIndexController::class, 'index'])->name('twod-play-index');

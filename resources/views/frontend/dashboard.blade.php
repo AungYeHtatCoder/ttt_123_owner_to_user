@@ -18,6 +18,12 @@
           <p class="ps-3">3D ထိုးမှတ်တမ်း</p>
           </div>
         </a>
+         <a href="{{ route('user.threed_winners_histories') }}" class="text-decoration-none">
+          <div class="d-flex list-card">
+          <i class="fa-regular fa-circle-user fs-3 ms-2"></i>
+          <p class="ps-3">3D အောင်မြင်မှုမှတ်တမ်း</p>
+          </div>
+        </a>
         <a href="{{ url('/user/two-d-winners-history') }}" class="text-decoration-none">
           <div class="d-flex list-card">
           <i class="fa-solid fa-language fs-3 ms-2"></i>
