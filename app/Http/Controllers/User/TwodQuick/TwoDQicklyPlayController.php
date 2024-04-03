@@ -66,14 +66,22 @@ class TwoDQicklyPlayController extends Controller
         ]);
 
         // Fetch all head digits not allowed
-         $headDigitsNotAllowed = HeadDigit::pluck('digit_one', 'digit_two', 'digit_three')->flatten()->unique()->toArray();
+        //  $headDigitsNotAllowed = HeadDigit::pluck('digit_one', 'digit_two', 'digit_three')->flatten()->unique()->toArray();
+        $headDigitsNotAllowed = HeadDigit::query()
+        ->get(['digit_one', 'digit_two', 'digit_three'])
+        ->flatMap(function ($item) {
+            return [$item->digit_one, $item->digit_two, $item->digit_three];
+        })
+        ->unique()
+        ->all();
 
     // Check if any selected digit starts with the head digits not allowed
     foreach ($request->amounts as $two_digit_string => $sub_amount) {
         $headDigitOfSelected = substr($two_digit_string, 0, 1); // Extract the head digit
         if (in_array($headDigitOfSelected, $headDigitsNotAllowed)) {
             session()->flash('SuccessRequest', " ထိပ်ဂဏန်း - '{$headDigitOfSelected}' - ကိုပိတ်ထားသောကြောင့် ကံစမ်း၍ မရနိုင်ပါ ၊ ကျေးဇူးပြု၍ ဂဏန်းပြန်ရွှေးချယ်ပါ။");
-            return redirect()->back()->with('error', "Bets on numbers starting with '{$headDigitOfSelected}' are not allowed.");
+            // return redirect()->back()->with('error', "Bets on numbers starting with '{$headDigitOfSelected}' are not allowed.");
+            return redirect()->back();
         }
     }
 
@@ -90,7 +98,8 @@ class TwoDQicklyPlayController extends Controller
         if (in_array($betDigit, $closedDigits)) {
             session()->flash('SuccessRequest', "2D -'{$betDigit}' -ဂဏန်းကိုပိတ်ထားသောကြောင့် ကံစမ်း၍ မရနိုင်ပါ ၊ ကျေးဇူးပြု၍ ဂဏန်းပြန်ရွှေးချယ်ပါ။");
 
-            return redirect()->back()->with('error', "Bets on number '{$betDigit}' are not allowed.");
+            // return redirect()->back()->with('error', "Bets on number '{$betDigit}' are not allowed.");
+            return redirect()->back();
         }
     }
         $currentSession = $this->determineSession();

@@ -52,7 +52,7 @@
      
 
     <!-- content -->
-    <div class="dashboard-lists pt-2 ps-2">
+    {{-- <div class="dashboard-lists pt-2 ps-2">
         <div class="d-flex list-card justify-content-around align-items-center">
          <p class="">2023-11-16</p>
          <p>970</p>
@@ -77,7 +77,7 @@
             <p class="">2023-11-16</p>
             <p>970</p>
            </div>
-    </div> 
+    </div>  --}}
     </div>
 </div>
 <div class="row footer">
