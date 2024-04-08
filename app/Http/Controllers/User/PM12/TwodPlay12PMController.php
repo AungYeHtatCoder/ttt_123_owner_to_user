@@ -29,8 +29,9 @@ class TwodPlay12PMController extends Controller
         $totalBetAmountForTwoDigit = DB::table('lottery_two_digit_copy')
             ->where('two_digit_id', $digit->id)
             ->sum('sub_amount');
+        $defaultLimitAmount = TwoDLimit::latest()->first()->two_d_limit;
 
-        $remainingAmounts[$digit->id] = 50000 - $totalBetAmountForTwoDigit; // Assuming 5000 is the session limit
+        $remainingAmounts[$digit->id] = $defaultLimitAmount - $totalBetAmountForTwoDigit; // Assuming 5000 is the session limit
     }
     $lottery_matches = LotteryMatch::where('id', 1)->whereNotNull('is_active')->first();
 
@@ -47,8 +48,9 @@ class TwodPlay12PMController extends Controller
         $totalBetAmountForTwoDigit = DB::table('lottery_two_digit_copy')
             ->where('two_digit_id', $digit->id)
             ->sum('sub_amount');
-
-        $remainingAmounts[$digit->id] = 50000 - $totalBetAmountForTwoDigit; // Assuming 5000 is the session limit
+        $defaultLimitAmount = TwoDLimit::latest()->first()->two_d_limit;
+        
+        $remainingAmounts[$digit->id] = $defaultLimitAmount - $totalBetAmountForTwoDigit; // Assuming 5000 is the session limit
     }
     $lottery_matches = LotteryMatch::where('id', 1)->whereNotNull('is_active')->first();
 
@@ -184,7 +186,7 @@ class TwodPlay12PMController extends Controller
     $totalBetAmount = DB::table('lottery_two_digit_copy')->where('two_digit_id', $twoDigit->id)->sum('sub_amount');
 
     if ($totalBetAmount + $subAmount > $limitAmount) {
-        throw new \Exception('The betting limit has been reached.');
+        throw new \Exception('သတ်မှတ်ဘရိတ်ကျော်လွန်နေသောကြောင့် ကံစမ်း၍မနိုင်တော့ပါ။ ကျေးဇူးတင်ပါတယ်!');
     }
 
     LotteryTwoDigitPivot::create([
